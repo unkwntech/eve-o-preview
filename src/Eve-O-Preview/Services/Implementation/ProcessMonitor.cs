@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace EveOPreview.Services.Implementation
 {
 	sealed class ProcessMonitor : IProcessMonitor
 	{
 		#region Private constants
-		private const string DEFAULT_PROCESS_NAME = "ExeFile";
-		private const string CURRENT_PROCESS_NAME = "EVE-O Preview";
+		private string[] DEFAULT_PROCESS_NAME = {"exefile", "javaw"};
+        private const string CURRENT_PROCESS_NAME = "EVE-O Preview";
 		#endregion
 
 		#region Private fields
@@ -28,7 +29,11 @@ namespace EveOPreview.Services.Implementation
 		private bool IsMonitoredProcess(string processName)
 		{
 			// This is a possible extension point
-			return String.Equals(processName, ProcessMonitor.DEFAULT_PROCESS_NAME, StringComparison.OrdinalIgnoreCase);
+
+			Console.WriteLine(processName);
+
+            return Array.IndexOf(this.DEFAULT_PROCESS_NAME, processName) > -1;
+			//return String.Equals(processName, ProcessMonitor.DEFAULT_PROCESS_NAME, StringComparison.OrdinalIgnoreCase);
 		}
 
 		private IProcessInfo GetCurrentProcessInfo()
