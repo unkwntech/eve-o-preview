@@ -7,7 +7,8 @@ namespace EveOPreview.Services.Implementation
 	sealed class ProcessMonitor : IProcessMonitor
 	{
 		#region Private constants
-		private const string DEFAULT_PROCESS_NAME = "ExeFile";
+		private string[] DEFAULT_PROCESS_NAME = { "exefile", "javaw"};
+
 		private const string CURRENT_PROCESS_NAME = "EVE-O Preview";
 		#endregion
 
@@ -28,7 +29,8 @@ namespace EveOPreview.Services.Implementation
 		private bool IsMonitoredProcess(string processName)
 		{
 			// This is a possible extension point
-			return String.Equals(processName, ProcessMonitor.DEFAULT_PROCESS_NAME, StringComparison.OrdinalIgnoreCase);
+			return Array.IndexOf(this.DEFAULT_PROCESS_NAME, processName) != -1;
+			//return String.Equals(processName, ProcessMonitor.DEFAULT_PROCESS_NAME, StringComparison.OrdinalIgnoreCase);
 		}
 
 		private IProcessInfo GetCurrentProcessInfo()
